@@ -6,19 +6,18 @@ public class MainCar {
         Car car2 = new Car("BMW", "blue", "2.0L", "Ahmed");
 
         Driver driver1 = car1;
-        car1.drive();
-        car1.setNumber("B 2525 TF");
+        driver1.drive();
+        driver1.setNumber("B 2525 TF");
 
-        car1.sale("Sebastian");
-        car1.changeNumber("B 777 MW");
-        car1.changeEngine("1.8L");
-        car1.drive();
+        driver1.sale("Sebastian");
+        driver1.changeNumber("B 777 MW");
+        driver1.drive();
 
 
         Mechanic mechanic = car2;
-        car2.repair();
-        car2.changeEngine("2.4L");
-        car2.recolor("red");
-        car2.drive();
+        mechanic.repair();
+        mechanic.changeEngine("2.4L");
+        mechanic.recolor("red");
+
     }
 }
