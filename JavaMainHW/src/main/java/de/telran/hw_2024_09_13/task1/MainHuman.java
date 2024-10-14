@@ -26,7 +26,12 @@ public class MainHuman {
         humans.add(man9);
         humans.add(man0);
 
+        System.out.println("-----------------------------------------------");
+        System.out.println("man0: " + man0.toString() + "   ===   man1: " + man1.toString() + "? - " + man0.equals(man1));
+        System.out.println("man0: " + man0.toString() + "   ===   man9: " + man9.toString() + "? - " + man0.equals(man9));
+
         // print all
+        System.out.println("-----------------------------------------------");
         Iterator<Human> iterator = humans.iterator();
         while (iterator.hasNext()) {
             Human man = iterator.next();

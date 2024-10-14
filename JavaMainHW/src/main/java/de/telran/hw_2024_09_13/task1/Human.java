@@ -30,7 +30,7 @@ public class Human {
         return "Human: " +
                 "name=" + this.name +
                 ", eye=" + this.eye +
-                ", age='" + this.age;
+                ", age=" + this.age;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Human {
         if (o == null || getClass() != o.getClass()) return false;
         Human man = (Human) o;
         return this.age == man.age
-                && Objects.equals(this.name, man.name)
-                && Objects.equals(this.eye, man.eye);
+                && Objects.equals(this.name, man.getName())
+                && Objects.equals(this.eye, man.getEye());
     }
 }
