@@ -4,6 +4,9 @@ import java.util.*;
 
 public class MainCat {
     public static void main(String[] args) {
+
+        // создайте Map, ключем которого будет имя, а значением объект Cat.
+        // информация о котах должна храниться в упорядоченном виде по имени.
         Map<String, Cat> cats  = new TreeMap<>();
         Cat cat01 = new Cat("Cat20",3, 2, "Syam");
         cats.put(cat01.getName(), cat01);
@@ -48,6 +51,9 @@ public class MainCat {
 
         System.out.println(cats);
 
+        System.out.println("-----------------------------------------------------------");
+        //выведите имена котов, порода которых равна N (на ваше усмотрение).
+        System.out.println("Cats names in British breed:");
         for (Map.Entry<String, Cat> cat : cats.entrySet()) {
             if (cat.getValue().getBreed() == "British") {
                 System.out.println(cat.getValue().getName() + ", breed: "
@@ -55,6 +61,9 @@ public class MainCat {
             }
         }
 
+        System.out.println("-----------------------------------------------------------");
+        // выведите список всех котов, вес которых больше значения М (на ваше усмотрение).
+        System.out.println("Cats with weight > 3: ");
         for (Map.Entry<String, Cat> cat : cats.entrySet()) {
             if (cat.getValue().getWeight() > 3) {
                 System.out.println(cat.getValue().getName() + ", weight > 3: "
@@ -62,5 +71,20 @@ public class MainCat {
             }
         }
 
+
+        System.out.println("-----------------------------------------------------------");
+        // * найдите кота с самым большим весом и возрастом одновременно.
+        System.out.println("Hers is a the heaviest and the oldest cat:");
+        Comparator<Cat> catComparatorByWeightThenAge = new SortCatByWeight()
+                .thenComparing(new SortCatByAge());
+        Collection<Cat> catList = cats.values();
+        // System.out.println(catList);
+        Cat oldHeavyCat = catList
+                .stream()
+                .sorted(catComparatorByWeightThenAge)
+                .limit(1)
+                .toList()
+                .get(0);
+        System.out.println(oldHeavyCat);
     }
 }

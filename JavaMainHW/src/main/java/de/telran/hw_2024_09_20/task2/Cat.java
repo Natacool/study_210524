@@ -35,4 +35,14 @@ public class Cat implements Comparable<Cat>{
         else if(this.age < cat.getAge()) return -1;
         else return 0;
     }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", weight=" + weight +
+                ", breed='" + breed + '\'' +
+                '}';
+    }
 }
