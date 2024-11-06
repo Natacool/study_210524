@@ -1,6 +1,8 @@
 package de.telran.hw_2024_09_27.task1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +84,58 @@ public class MainStream1 {
 //Задание 7:Преобразование списка объектов класса в список их имен, отсортированных по возрасту ------
         System.out.println("-----------------------------------------");
         System.out.println("Преобразование списка объектов класса в список их имен, отсортированных по возрасту");
+        class User {
+            private String name;
+            private int age;
+            public User(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+            public String getName() {
+                return name;
+            }
+            public int getAge() {
+                return age;
+            }
+
+            @Override
+            public String toString() {
+                return "User{" +
+                        "name='" + name + '\'' +
+                        ", age=" + age +
+                        '}';
+            }
+        }
+
+        User u01 = new User("Alla", 24);
+        User u02 = new User("Bella", 14);
+        User u03 = new User("Nino", 23);
+        User u04 = new User("Marat", 42);
+        User u05 = new User("Ulrich", 56);
+        User u06 = new User("Maria", 33);
+        User u07 = new User("Fred", 25);
+        User u08 = new User("Luis", 24);
+        User u09 = new User("Margo", 16);
+        User u10 = new User("John", 24);
+        User u11 = new User("Samantha", 17);
+        User u12 = new User("Ursula", 65);
+        User u13 = new User("Ben", 30);
+        List<User> users = new ArrayList<>();
+        users.add(u01);
+        users.add(u02);
+        users.add(u03);
+        users.add(u04);
+        users.add(u05);
+        users.add(u06);
+        users.add(u07);
+        users.add(u08);
+        users.add(u09);
+        users.add(u10);
+        users.add(u11);
+        users.add(u12);
+        users.add(u13);
+        System.out.println(users);
+        System.out.println(users.stream().sorted().toList());
 
 //Задание 8:Нахождение суммы чисел, кратных 3 и 5, из списка чисел -------
         System.out.println("-----------------------------------------");
@@ -112,6 +166,7 @@ public class MainStream1 {
 //Задание 9:Получение списка слов, содержащих только уникальные символы, из списка строк
         System.out.println("-----------------------------------------");
         System.out.println("Получение списка слов, содержащих только уникальные символы, из списка строк");
+
 
 
 //     * -- Получить среднее значение
@@ -148,26 +203,6 @@ public class MainStream1 {
         // Задача 13: Получить первые 3 строки из списка и вывести их в обратном порядке.
         // Задача 14: Пропустить первые 2 элемента и оставить только уникальные.
         // Задача 15: Фильтрация и сортировка пользователей по возрасту.
-        class User {
-            private String name;
-            private int age;
-
-
-            public User(String name, int age) {
-                this.name = name;
-                this.age = age;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public int getAge() {
-                return age;
-            }
-
-        }
-
 
 
     }
