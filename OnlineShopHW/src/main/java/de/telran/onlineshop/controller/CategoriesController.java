@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/categories")
 public class CategoriesController {
     @GetMapping
-    String cartGet(){
+    String categoriesGet(){
         return "Привет, я контроллер - CategoriesController, " + this.toString();
     }
 }

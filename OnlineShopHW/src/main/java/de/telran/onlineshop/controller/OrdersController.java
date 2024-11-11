@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/orders")
 public class OrdersController {
     @GetMapping
-    String cartGet(){
+    String ordersGet(){
         return "Привет, я контроллер - OrdersController, " + this.toString();
     }
 }

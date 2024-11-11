@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/favorites")
 public class FavoritesController {
     @GetMapping
-    String cartGet(){
+    String favoritesGet(){
         return "Привет, я контроллер - FavoritesController, " + this.toString();
     }
 }
