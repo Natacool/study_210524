@@ -10,7 +10,7 @@ public class MainFindPrime {
         FindPrime[] dts = new FindPrime[3];
 /*
         for (int i = 0; i < num; i++) {
-            dts[i] = new FindPrime(0, 700000);
+            dts[i] = new FindPrime(2, 1000000);
             dts[i].setDaemon(true);
             dts[i].start();
             //Thread.sleep(100);

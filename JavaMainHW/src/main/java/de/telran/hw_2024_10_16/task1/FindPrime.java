@@ -14,22 +14,15 @@ public class FindPrime extends Thread{
         long amount = 0;
         try {
             for (int i = start; i <= end; i++) {
-
-
-//                try {
                     Thread.sleep(10);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
+
                 if (isPrime(i)){
                     System.out.println("\t\t\t" + i + " is PRIME");
                     amount++;
                 }
-                //else{
-                //    System.out.println("\t\t\t\t" + i + " is not prime");
-                //}
+
                 System.out.println(Thread.currentThread().getName()
-                        + " -> amount = "
+                        + " -> amount of primes = "
                         + amount);
 
                 if (Thread.interrupted()) {
