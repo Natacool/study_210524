@@ -3,7 +3,7 @@ package de.telran.onlineshop.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Products {
+public class Product {
     private int productId;
     private String name;
     private String description;
@@ -14,10 +14,10 @@ public class Products {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Products() {
+    public Product() {
     }
 
-    public Products(int productId, String name, String description, Float price, int categoryId, String imageUrl, Float discountPrice) {
+    public Product(int productId, String name, String description, Float price, int categoryId, String imageUrl, Float discountPrice) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -103,10 +103,10 @@ public class Products {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Products products)) return false;
-        return getProductId() == products.getProductId()
-                && Objects.equals(getName(), products.getName())
-                && Objects.equals(getCreatedAt(), products.getCreatedAt());
+        if (!(o instanceof Product product)) return false;
+        return getProductId() == product.getProductId()
+                && Objects.equals(getName(), product.getName())
+                && Objects.equals(getCreatedAt(), product.getCreatedAt());
     }
 
     @Override

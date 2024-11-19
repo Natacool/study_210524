@@ -2,7 +2,7 @@ package de.telran.onlineshop.model;
 
 import java.util.Objects;
 
-public class Users {
+public class User {
     private int userId;
     private String name;
     private String email;
@@ -10,12 +10,12 @@ public class Users {
     private String passwordHash;
     RolesEnum role;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(int userId, String name, String email,
-                 String phoneNumber, String passwordHash,
-                 RolesEnum role) {
+    public User(int userId, String name, String email,
+                String phoneNumber, String passwordHash,
+                RolesEnum role) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -75,10 +75,10 @@ public class Users {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Users users)) return false;
-        return userId == users.userId
-                && Objects.equals(getName(), users.getName())
-                && Objects.equals(getEmail(), users.getEmail());
+        if (!(o instanceof User user)) return false;
+        return userId == user.userId
+                && Objects.equals(getName(), user.getName())
+                && Objects.equals(getEmail(), user.getEmail());
     }
 
     @Override

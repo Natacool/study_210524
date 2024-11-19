@@ -1,9 +1,12 @@
 package de.telran.onlineshop.controller;
 
 import de.telran.onlineshop.model.RolesEnum;
-import de.telran.onlineshop.model.Users;
+import de.telran.onlineshop.model.User;
+import de.telran.onlineshop.service.UsersService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UsersController {
 
-    private List<Users> usersList;
+    private UsersService usersService;
     @GetMapping(value = "/test")
     String usersGet(){
         return "Привет, я контроллер - UsersController, " + this.toString();
@@ -22,73 +25,58 @@ public class UsersController {
 
     @PostConstruct
     void init() {
-        usersList = new ArrayList<>();
-
-        usersList.add(new Users(1, "User1", "user1@yahoo.com", "+1234561", "", RolesEnum.ADMINISTRATOR));
-        usersList.add(new Users(2, "User2", "user2@yahoo.com", "+1234562", "", RolesEnum.CLIENT));
-        usersList.add(new Users(3, "User3", "user3@yahoo.com", "+1234563", "", RolesEnum.CLIENT));
-        usersList.add(new Users(4, "User4", "user4@yahoo.com", "+1234564", "", RolesEnum.CLIENT));
-        usersList.add(new Users(5, "User5", "user5@yahoo.com", "+1234565", "", RolesEnum.CLIENT));
-
         System.out.println("Run code during creating an object: "
                 + this.getClass().getName());
     }
 
     @GetMapping  //select
-    List<Users> getAllUsers() {
-        return usersList;
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = usersService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.valueOf(200));
     }
 
-    @GetMapping(value = "/find/{id}")
-    Users getUserById(@PathVariable Long id) { ///users/find/3
-        return usersList.stream()
-                .filter(category -> category.getUserId()==id)
-                .findFirst()
-                .orElse(null);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = usersService.getUserById(id);
+        return ResponseEntity.status(200).body(user);
     }
 
     // Экранирование кириллицы для url - https://planetcalc.ru/683/
     @GetMapping(value = "/get")
-    Users getUserByName(@RequestParam String name) { ///users/get?name=Other,k=2
-        return usersList.stream()
-                .filter(user -> user.getName().equals(name))
-                .findFirst()
-                .orElse(null);
+    public ResponseEntity<User> getUserByName(@RequestParam String name) { ///users/get?name=Other,k=2
+        User user = usersService.getUserByName(name);
+        return ResponseEntity.status(200).body(user);
     }
 
     @PostMapping //Jackson
-    public boolean createUsers(@RequestBody Users newUser) { //insert
-        return usersList.add(newUser);
+    public ResponseEntity<Boolean> createUsers(@RequestBody User newUser) { //insert
+        boolean res = usersService.createUser(newUser);
+        return ResponseEntity.status(201).body(res);
     }
 
     @PutMapping
-    public Users updateUsers(@RequestBody Users updUser) { //update
-        Users result = usersList.stream()
-                .filter(user -> user.getUserId() == updUser.getUserId())
-                .findFirst()
-                .orElse(null);
-        if(result!=null) {
-            result.setName(updUser.getName());
-        }
-        return result;
+    public ResponseEntity<User> updateUsers(@RequestBody User updUser) { //update
+        User user = usersService.updateUser(updUser);
+        return ResponseEntity.status(202).body(user);
+    }
+
+    @PutMapping
+    public ResponseEntity<User> updateClient(@RequestBody User user)  {
+        User userResponse = usersService.updateUser(user);
+        return ResponseEntity.status(202).body(userResponse);
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteUsers(@PathVariable Long id) { //delete
-        Iterator<Users> it = usersList.iterator();
-        while (it.hasNext()) {
-            Users current = it.next();
-            if(current.getUserId()==id) {
-                it.remove();
-            }
-        }
+    public ResponseEntity<User> deleteUser(@PathVariable Long id) { //delete
+        User delUser = usersService.getUserById(id);
+        return ResponseEntity.status(204).body(delUser);
     }
 
     @PreDestroy
-    void destroy() {
-        usersList.clear();
+    public ResponseEntity<Void> destroy() {
+        usersService.destroy();
         System.out.println("Run code after finishing work with the object: "
                 + this.getClass().getName());
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
-
 }
