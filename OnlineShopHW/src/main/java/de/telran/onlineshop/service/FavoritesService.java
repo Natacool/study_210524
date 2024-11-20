@@ -1,5 +1,4 @@
 package de.telran.onlineshop.service;
 
-public class CartService {
-
+public class FavoritesService {
 }

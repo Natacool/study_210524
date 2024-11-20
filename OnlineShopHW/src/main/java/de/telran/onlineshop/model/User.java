@@ -3,7 +3,7 @@ package de.telran.onlineshop.model;
 import java.util.Objects;
 
 public class User {
-    private int userId;
+    private long userId;
     private String name;
     private String email;
     private String phoneNumber;
@@ -13,7 +13,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String name, String email,
+    public User(long userId, String name, String email,
                 String phoneNumber, String passwordHash,
                 RolesEnum role) {
         this.userId = userId;
@@ -24,11 +24,11 @@ public class User {
         this.role = role;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Product {
-    private int productId;
+    private long productId;
     private String name;
     private String description;
     private Float price;
-    private int categoryId;
+    private long categoryId;
     private String imageUrl;
     private Float discountPrice;
     private LocalDateTime createdAt;
@@ -17,7 +17,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, String name, String description, Float price, int categoryId, String imageUrl, Float discountPrice) {
+    public Product(long productId, String name, String description, Float price, long categoryId, String imageUrl, Float discountPrice) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -29,11 +29,11 @@ public class Product {
         updatedAt = createdAt;
     }
 
-    public int getProductId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
         updatedAt = LocalDateTime.now();
     }
@@ -65,11 +65,11 @@ public class Product {
         updatedAt = LocalDateTime.now();
     }
 
-    public int getCategoryId() {
+    public long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
         updatedAt = LocalDateTime.now();
     }
