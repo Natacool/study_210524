@@ -28,7 +28,7 @@ public class Table {
         notify();
     }
 
-    public synchronized void put(int component) {
+    public synchronized void put(int component) throws InterruptedException {
         while (this.component > 0) {
             try {
                 wait();
@@ -41,6 +41,7 @@ public class Table {
                 + " puts ("
                 + component
                 + ") component on the table.");
+        Thread.sleep(10);
         notify();
     }
 

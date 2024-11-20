@@ -14,12 +14,11 @@ public class RobotPut  implements Runnable {
     }
     public void run(){
         for (int i = 0; i < components.size(); i++) {
-            table.put(components.get(i));
-        }
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            try {
+                table.put(components.get(i));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         table.setDoExit(true);
     }
