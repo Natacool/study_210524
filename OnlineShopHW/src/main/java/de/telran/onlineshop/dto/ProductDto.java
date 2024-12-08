@@ -1,23 +1,32 @@
-package de.telran.onlineshop.model;
+package de.telran.onlineshop.dto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Product {
+/*
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@Builder
+*/
+public class ProductDto {
     private long productId;
     private String name;
     private String description;
-    private Float price;
+    private Double price;
     private long categoryId;
     private String imageUrl;
-    private Float discountPrice;
+    private Double discountPrice;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product() {
+    public ProductDto() {
     }
 
-    public Product(long productId, String name, String description, Float price, long categoryId, String imageUrl, Float discountPrice) {
+    public ProductDto(long productId, String name, String description, Double price, long categoryId, String imageUrl, Double discountPrice) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -56,11 +65,11 @@ public class Product {
         updatedAt = LocalDateTime.now();
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
         updatedAt = LocalDateTime.now();
     }
@@ -83,11 +92,11 @@ public class Product {
         updatedAt = LocalDateTime.now();
     }
 
-    public Float getDiscountPrice() {
+    public Double getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(Float discountPrice) {
+    public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
         updatedAt = LocalDateTime.now();
     }
@@ -103,7 +112,7 @@ public class Product {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product product)) return false;
+        if (!(o instanceof ProductDto product)) return false;
         return getProductId() == product.getProductId()
                 && Objects.equals(getName(), product.getName())
                 && Objects.equals(getCreatedAt(), product.getCreatedAt());

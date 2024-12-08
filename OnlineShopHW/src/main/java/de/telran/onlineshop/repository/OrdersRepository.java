@@ -1,4 +1,10 @@
 package de.telran.onlineshop.repository;
 
-public class OrdersRepository {
+import de.telran.onlineshop.entity.OrdersEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface OrdersRepository extends JpaRepository<OrdersEntity, Long> {
+// add at least one user query either OQL or SQL
 }

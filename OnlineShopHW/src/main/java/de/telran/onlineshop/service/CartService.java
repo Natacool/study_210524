@@ -1,5 +1,5 @@
 package de.telran.onlineshop.service;
 
-public class CartsService {
+public class CartService {
 
 }

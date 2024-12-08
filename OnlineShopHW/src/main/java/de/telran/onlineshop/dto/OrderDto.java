@@ -1,8 +1,16 @@
-package de.telran.onlineshop.model;
+package de.telran.onlineshop.dto;
 
 import java.time.LocalDateTime;
+import lombok.*;
 
-public class Order {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@Builder
+public class OrderDto {
     private long orderId;
     private long userId;
     private LocalDateTime createdAt;

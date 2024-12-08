@@ -1,8 +1,8 @@
-package de.telran.onlineshop.model;
+package de.telran.onlineshop.dto;
 
 import java.util.Objects;
 
-public class User {
+public class UserDto {
     private long userId;
     private String name;
     private String email;
@@ -10,12 +10,12 @@ public class User {
     private String passwordHash;
     RolesEnum role;
 
-    public User() {
+    public UserDto() {
     }
 
-    public User(long userId, String name, String email,
-                String phoneNumber, String passwordHash,
-                RolesEnum role) {
+    public UserDto(long userId, String name, String email,
+                   String phoneNumber, String passwordHash,
+                   RolesEnum role) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -75,7 +75,7 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User user)) return false;
+        if (!(o instanceof UserDto user)) return false;
         return userId == user.userId
                 && Objects.equals(getName(), user.getName())
                 && Objects.equals(getEmail(), user.getEmail());
