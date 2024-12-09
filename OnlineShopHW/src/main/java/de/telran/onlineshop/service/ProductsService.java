@@ -40,13 +40,14 @@ public class ProductsService {
     public List<ProductDto> getAllProducts() {
         List<ProductsEntity> productsEntities = productsRepository.findAll();
         return productsEntities.stream()
-                .map(entity -> new ProductDto(entity.getProductId()
+                .map(entity -> new ProductDto(
+                        entity.getProductId()
                         , entity.getName()
-                        ,entity.getDescription()
+                        , entity.getDescription()
                         , entity.getPrice()
-                        , entity.getCategoryId()
-                        ,entity.getImageUrl()
-                        ,entity.getDiscountPrice()
+                        , entity.getProductId()
+                        , entity.getImageUrl()
+                        , entity.getDiscountPrice()
                         ))
                 .collect(Collectors.toList());
     }

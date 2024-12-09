@@ -46,8 +46,8 @@ public class FavoritesService {
         List<FavoritesEntity> favoritesEntities = favoritesRepository.findAll();
         return favoritesEntities.stream()
                 .map(entity -> new FavoriteDto(entity.getFavoriteId()
-                        , entity.getUserId()
-                        , entity.getProductId()))
+                        , entity.getUser()
+                        , entity.getProduct()))
                 .collect(Collectors.toList());
     }
 
