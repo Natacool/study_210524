@@ -26,7 +26,7 @@ public class CategoriesEntity {
 
 //    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 // , fetch = FetchType.EAGER - load all data from DB even from joined tables
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category")//, cascade = CascadeType.ALL)
     private Set<ProductsEntity> products = new HashSet<>();
 
     public CategoriesEntity(Long categoryId, String name) {

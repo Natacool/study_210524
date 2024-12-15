@@ -19,6 +19,6 @@ public class CartEntity {
     @JoinColumn(name = "UserID", referencedColumnName = "userId")
     private UsersEntity user;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart")//, cascade = CascadeType.ALL)
     private Set<CartItemsEntity> cartItems = new HashSet<>();
 }

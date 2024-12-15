@@ -30,7 +30,7 @@ public class OrdersEntity {
     @JoinColumn(name = "UserID")
     private UsersEntity user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order")//, cascade = CascadeType.ALL)
     private Set<OrderItemsEntity> orderItems = new HashSet<>();
 
     @Column(name = "CreatedAt")

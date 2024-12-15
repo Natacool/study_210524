@@ -45,6 +45,9 @@ public class ProductsEntity {
     @Column(name = "UpdatedAt")
     private Timestamp updatedAt;
 
+    //    @ManyToOne//(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinColumn(name = "CategoryID") // имя колонки для связи с CategoriesEntity
+//    private CategoriesEntity category;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryID")
     private CategoriesEntity category;
@@ -52,10 +55,10 @@ public class ProductsEntity {
     @OneToMany(mappedBy = "product")
     private Set<OrderItemsEntity> orderItems = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")//, cascade = CascadeType.ALL)
     private Set<FavoritesEntity> favorites = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")//, cascade = CascadeType.ALL)
     private Set<CartItemsEntity> cartItems = new HashSet<>();
 
 }

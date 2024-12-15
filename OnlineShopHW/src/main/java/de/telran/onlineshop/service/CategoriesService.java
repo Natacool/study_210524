@@ -83,7 +83,6 @@ public class CategoriesService {
 
     // работает с БД
     public CategoryDto getCategoryById(Long id) {
-
         CategoriesEntity categoriesEntity = categoriesRepository.findById(id).orElse(new CategoriesEntity()); // new CategoriesEntity() or null
         return new CategoryDto(categoriesEntity.getCategoryId(), categoriesEntity.getName());
     }
