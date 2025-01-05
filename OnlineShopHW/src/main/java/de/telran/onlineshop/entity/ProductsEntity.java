@@ -52,13 +52,13 @@ public class ProductsEntity {
     @JoinColumn(name = "CategoryID")
     private CategoriesEntity category;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "order")
     private Set<OrderItemsEntity> orderItems = new HashSet<>();
 
-    @OneToMany(mappedBy = "product")//, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "favorite")//, cascade = CascadeType.ALL)
     private Set<FavoritesEntity> favorites = new HashSet<>();
 
-    @OneToMany(mappedBy = "product")//, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cartItem")//, cascade = CascadeType.ALL)
     private Set<CartItemsEntity> cartItems = new HashSet<>();
 
 }

@@ -1,5 +1,6 @@
 package de.telran.onlineshop.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -13,20 +14,26 @@ import java.util.Objects;
 @Builder
 */
 public class ProductDto {
-    private long productId;
+    private Long productId;
     private String name;
     private String description;
     private Double price;
-    private long categoryId;
+    //private CategoryDto categoryId;
+    private Long categoryId;
     private String imageUrl;
     private Double discountPrice;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+
 
     public ProductDto() {
     }
 
-    public ProductDto(long productId, String name, String description, Double price, long categoryId, String imageUrl, Double discountPrice) {
+    public ProductDto(Long productId, String name,
+                      String description, Double price,
+                      //CategoryDto categoryId, String imageUrl,
+                      Long categoryId, String imageUrl,
+                      Double discountPrice) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -34,7 +41,7 @@ public class ProductDto {
         this.categoryId = categoryId;
         this.imageUrl = imageUrl;
         this.discountPrice = discountPrice;
-        createdAt = LocalDateTime.now();
+        createdAt = Timestamp.valueOf(LocalDateTime.now());
         updatedAt = createdAt;
     }
 
@@ -44,7 +51,7 @@ public class ProductDto {
 
     public void setProductId(long productId) {
         this.productId = productId;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public String getName() {
@@ -53,7 +60,7 @@ public class ProductDto {
 
     public void setName(String name) {
         this.name = name;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public String getDescription() {
@@ -62,7 +69,7 @@ public class ProductDto {
 
     public void setDescription(String description) {
         this.description = description;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Double getPrice() {
@@ -71,16 +78,20 @@ public class ProductDto {
 
     public void setPrice(Double price) {
         this.price = price;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
-    public long getCategoryId() {
+    //public CategoryDto getCategoryId() {
+    //    return categoryId;
+    //}
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(long categoryId) {
+    //public void setCategoryId(CategoryDto categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public String getImageUrl() {
@@ -89,7 +100,7 @@ public class ProductDto {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Double getDiscountPrice() {
@@ -98,14 +109,14 @@ public class ProductDto {
 
     public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
-        updatedAt = LocalDateTime.now();
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
@@ -120,6 +131,7 @@ public class ProductDto {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(getProductId(), getName(), getCreatedAt());
     }
 

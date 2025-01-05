@@ -10,10 +10,12 @@ import lombok.*;
 @ToString
 @Builder
 public class OrderItemDto {
-    private long orderItemId;
-    private long orderId;
-    private long productId;
-    private int quantity;
-    private float priceAtPurchase;
+    private Long orderItemId;
+    //private OrderDto orderId;
+    private Long orderId;
+    //private ProductDto productId;
+    private Long productId;
+    private Integer quantity;
+    private Double priceAtPurchase;
 
 }

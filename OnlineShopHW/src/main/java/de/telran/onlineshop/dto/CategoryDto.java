@@ -3,7 +3,7 @@ package de.telran.onlineshop.dto;
 import java.util.Objects;
 
 public class CategoryDto {
-    private long categoryId;
+    private Long categoryId;
     private String name;
 
     public CategoryDto() {

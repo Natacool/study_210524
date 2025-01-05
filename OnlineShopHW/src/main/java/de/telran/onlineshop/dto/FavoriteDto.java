@@ -10,7 +10,9 @@ import lombok.*;
 @ToString
 @Builder
 public class FavoriteDto {
-    private long favoriteId;
-    private long userId;
-    private long productId;
+    private Long favoriteId;
+    //private UserDto user;
+    private Long userId;
+    //private ProductDto product;
+    private Long productId;
 }

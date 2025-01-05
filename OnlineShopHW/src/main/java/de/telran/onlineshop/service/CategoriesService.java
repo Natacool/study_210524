@@ -94,21 +94,21 @@ public class CategoriesService {
         return new CategoryDto(categoriesEntity.getCategoryId(), categoriesEntity.getName());
     }
 
-    public boolean createCategories(CategoryDto newCategory) { //insert
+    public boolean createCategory(CategoryDto newCategory) { //insert
         CategoriesEntity createCategoryEntity = new CategoriesEntity(null, newCategory.getName());
         CategoriesEntity returnCategoryEntity = categoriesRepository.save(createCategoryEntity);
 
         return returnCategoryEntity.getCategoryId() != null;
     }
 
-    public CategoryDto updateCategories(CategoryDto updCategory) { //update
+    public CategoryDto updateCategory(CategoryDto updCategory) { //update
         CategoriesEntity createCategoryEntity = new CategoriesEntity(updCategory.getCategoryId(), updCategory.getName());
         CategoriesEntity returnCategoryEntity = categoriesRepository.save(createCategoryEntity);
         // трансформируем данные из Entity в Dto и возвращаем пользователю
         return new CategoryDto(returnCategoryEntity.getCategoryId(), returnCategoryEntity.getName());
     }
 
-    public void deleteCategories(Long id) { //delete
+    public void deleteCategory(Long id) { //delete
         // categoriesRepository.deleteById(id); //первый вариант реализации Delete, менее информативно
 
         //второй вариант реализации Delete

@@ -30,20 +30,17 @@ public class OrdersEntity {
     @JoinColumn(name = "UserID")
     private UsersEntity user;
 
-    @OneToMany(mappedBy = "order")//, cascade = CascadeType.ALL)
-    private Set<OrderItemsEntity> orderItems = new HashSet<>();
-
     @Column(name = "CreatedAt")
     private Timestamp createdAt;
 
     @Column(name = "DeliveryAddress")
-    private Timestamp deliveryAddress;
+    private String deliveryAddress;
 
     @Column(name = "ContactPhone")
-    private Timestamp contactPhone;
+    private String contactPhone;
 
     @Column(name = "DeliveryMethod")
-    private Timestamp deliveryMethod;
+    private String deliveryMethod;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status")
@@ -52,4 +49,19 @@ public class OrdersEntity {
     @Column(name = "UpdatedAt")
     private Timestamp updatedAt;
 
+    @OneToMany(mappedBy = "order")//, cascade = CascadeType.ALL)
+    private Set<OrderItemsEntity> orderItems = new HashSet<>();
+
+    public OrdersEntity(Long id, UsersEntity user, Timestamp createdAt,
+                        String deliveryAddress, String contactPhone,
+                        String deliveryMethod, Status status, Timestamp updatedAt) {
+        this.orderId = id;
+        this.user = user;
+        this.createdAt = createdAt;
+        this.deliveryAddress = deliveryAddress;
+        this.contactPhone = contactPhone;
+        this.deliveryMethod = deliveryMethod;
+        this.status = status;
+        this.updatedAt = updatedAt;
+    }
 }

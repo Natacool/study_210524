@@ -10,10 +10,10 @@ import lombok.*;
 @ToString
 @Builder
 public class CartItemDto {
-    private long cartItemId;
-    private long cartId;
-    private long productId;
-    private int quantity;
-
-
+    private Long cartItemId;
+    //private CartDto cartId;
+    private Long cartId;
+    //private ProductDto productId;
+    private Long productId;
+    private Integer quantity;
 }

@@ -4,6 +4,7 @@ import de.telran.onlineshop.dto.UserDto;
 import de.telran.onlineshop.service.UsersService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
+@RequiredArgsConstructor
 public class UsersController {
 
-    private UsersService usersService;
+    private final UsersService usersService;
     @GetMapping(value = "/test")
     String usersGet(){
         return "Привет, я контроллер - UsersController, " + this.toString();
@@ -46,21 +48,15 @@ public class UsersController {
     }
 
     @PostMapping //Jackson
-    public ResponseEntity<Boolean> createUsers(@RequestBody UserDto newUser) { //insert
+    public ResponseEntity<Boolean> createUser(@RequestBody UserDto newUser) { //insert
         boolean res = usersService.createUser(newUser);
         return ResponseEntity.status(201).body(res);
     }
 
     @PutMapping
-    public ResponseEntity<UserDto> updateUsers(@RequestBody UserDto updUser) { //update
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto updUser) { //update
         UserDto user = usersService.updateUser(updUser);
         return ResponseEntity.status(202).body(user);
-    }
-
-    @PutMapping
-    public ResponseEntity<UserDto> updateClient(@RequestBody UserDto user)  {
-        UserDto userResponse = usersService.updateUser(user);
-        return ResponseEntity.status(202).body(userResponse);
     }
 
     @DeleteMapping(value = "/{id}")

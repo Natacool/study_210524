@@ -30,13 +30,11 @@ public class FavoritesService {
     void init() {
         UsersEntity user1 = usersRepository.findById(1L).orElse(null);
         ProductsEntity product1 = productsRepository.findById(2L).orElse(null);
-        //FavoritesEntity favorite1 = new FavoritesEntity(null, user1, product1);
-        FavoritesEntity favorite1 = new FavoritesEntity();
+        FavoritesEntity favorite1 = new FavoritesEntity(null, user1, product1);
         favoritesRepository.save(favorite1);
 
         ProductsEntity product2 = productsRepository.findById(1L).orElse(null);
-        //FavoritesEntity favorite2 = new FavoritesEntity(null, user1, product2);
-        FavoritesEntity favorite2 = new FavoritesEntity();
+        FavoritesEntity favorite2 = new FavoritesEntity(null, user1, product2);
         favoritesRepository.save(favorite2);
 
         System.out.println("Выполняем логику при создании объекта "
@@ -46,9 +44,9 @@ public class FavoritesService {
     public List<FavoriteDto> getAllFavorites() {
         List<FavoritesEntity> favoritesEntities = favoritesRepository.findAll();
         return favoritesEntities.stream()
-                .map(entity -> new FavoriteDto(entity.getFavoriteId()
-                        , entity.getUser().getUserId()
-                        , entity.getProduct().getProductId()))
+                .map(entity -> new FavoriteDto(entity.getFavoriteId(),
+                        entity.getUser().getUserId(),
+                        entity.getProduct().getProductId()))
                 .collect(Collectors.toList());
     }
 
@@ -88,7 +86,7 @@ public class FavoritesService {
                 returnFavoriteEntity.getProduct().getProductId());
     }
 
-    public void deleteCategories(Long id) { //delete
+    public void deleteFavorite(Long id) { //delete
         // favoritesRepository.deleteById(id); //первый вариант реализации Delete, менее информативно
 
         //второй вариант реализации Delete
@@ -103,7 +101,7 @@ public class FavoritesService {
 
     @PreDestroy
     void destroy() {
-        categoryList.clear();
+        favoriteDtoList.clear();
         System.out.println("Выполняем логику при окончании работы с  объектом "+this.getClass().getName());
     }
 

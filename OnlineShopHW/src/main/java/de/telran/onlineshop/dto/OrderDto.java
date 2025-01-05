@@ -1,6 +1,9 @@
 package de.telran.onlineshop.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+
+import de.telran.onlineshop.entity.enums.Status;
 import lombok.*;
 
 @AllArgsConstructor
@@ -11,13 +14,16 @@ import lombok.*;
 @ToString
 @Builder
 public class OrderDto {
-    private long orderId;
-    private long userId;
-    private LocalDateTime createdAt;
+    private Long orderId;
+    //private UserDto userId;
+    private Long userId;
+    private Timestamp createdAt;
     private String deliveryAddress;
     private String contactPhone;
     private String deliveryMethod;
-    private OrderStatusEnum status;
-    private LocalDateTime updatedAt;
+//    private OrderStatusEnum status;
+    private Status status;
+//    private LocalDateTime updatedAt;
+    private Timestamp updatedAt;
 
 }

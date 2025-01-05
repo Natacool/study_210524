@@ -1,14 +1,24 @@
 package de.telran.onlineshop.dto;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@JsonInclude(JsonInclude.Include.NON_NULL) //если равно null - скрыть в выводе
 public class UserDto {
-    private long userId;
+    private Long userId;
     private String name;
+    @JsonInclude(JsonInclude.Include.NON_NULL) //если равно null - скрыть в выводе
     private String email;
     private String phoneNumber;
     private String passwordHash;
     RolesEnum role;
+
+    private Set<FavoriteDto> favorites = new HashSet<>();
+    //private CartDto cart;
+    private Long cart;
 
     public UserDto() {
     }

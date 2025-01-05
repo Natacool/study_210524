@@ -10,6 +10,6 @@ import lombok.*;
 @ToString
 @Builder
 public class CartDto {
-    private long cartId;
-    private long userId;
+    private Long cartId;
+    //private Long userId;
 }
