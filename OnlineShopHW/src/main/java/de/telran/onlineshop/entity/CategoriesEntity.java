@@ -1,6 +1,8 @@
 package de.telran.onlineshop.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.HashSet;
@@ -22,6 +24,8 @@ public class CategoriesEntity {
     private Long categoryId;
 
     @Column(name = "Name")
+    @NotNull
+    @NotBlank
     private String name;
 
 //    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

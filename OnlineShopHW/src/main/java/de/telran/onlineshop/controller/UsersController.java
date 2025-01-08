@@ -4,6 +4,7 @@ import de.telran.onlineshop.dto.UserDto;
 import de.telran.onlineshop.service.UsersService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,6 @@ import java.util.List;
 public class UsersController {
 
     private final UsersService usersService;
-    @GetMapping(value = "/test")
-    String usersGet(){
-        return "Привет, я контроллер - UsersController, " + this.toString();
-    }
-
     @PostConstruct
     void init() {
         System.out.println("Run code during creating an object: "
@@ -36,6 +32,9 @@ public class UsersController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        if (id < 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
         UserDto user = usersService.getUserById(id);
         return ResponseEntity.status(222).body(user);
     }
@@ -47,14 +46,20 @@ public class UsersController {
         return ResponseEntity.status(200).body(user);
     }
 
-    @PostMapping //Jackson
+    @PostMapping(value = "/create") //Jackson
     public ResponseEntity<Boolean> createUser(@RequestBody UserDto newUser) { //insert
         boolean res = usersService.createUser(newUser);
         return ResponseEntity.status(201).body(res);
     }
 
+    @PostMapping //Jackson
+    public ResponseEntity<UserDto> insertUser(@RequestBody @Valid UserDto newUser) { //insert
+        UserDto user = usersService.insertUser(newUser);
+        return ResponseEntity.status(201).body(user);
+    }
+
     @PutMapping
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto updUser) { //update
+    public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto updUser) { //update
         UserDto user = usersService.updateUser(updUser);
         return ResponseEntity.status(202).body(user);
     }
@@ -73,4 +78,9 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    // For testing purpose
+    @GetMapping(value = "/test")
+    String usersGet(){
+        return "Привет, я контроллер - UsersController, " + this.toString();
+    }
 }

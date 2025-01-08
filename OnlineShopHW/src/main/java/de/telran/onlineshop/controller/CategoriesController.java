@@ -2,6 +2,7 @@ package de.telran.onlineshop.controller;
 
 import de.telran.onlineshop.dto.CategoryDto;
 import de.telran.onlineshop.service.CategoriesService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,6 @@ public class CategoriesController {
     // final - for @RequiredArgsConstructor
     //@Autowired - инъекция через value (не рекомендуемая из-за Reflection)
     private CategoriesService categoriesService;
-
-    @GetMapping
-    String categoriesGet(){
-        return "Привет, я контроллер - CategoriesController, " + this.toString();
-    }
 
     // test tmp - failed security, we should never get repo entities to end user
 
@@ -40,7 +36,12 @@ public class CategoriesController {
     }
 
     @GetMapping(value = "/find/{id}")
-    public CategoryDto getCategoryById(@PathVariable Long id) { ///categories/find/3
+    public CategoryDto getCategoryById(@PathVariable Long id) { ///categories/find/3  // throws FileNotFoundException
+// for testing - artificial situation
+//        if (id < 0) {
+//            new IllegalArgumentException("id should NOT be negative");
+//        }
+
         return categoriesService.getCategoryById(id);
     }
 
@@ -52,13 +53,13 @@ public class CategoriesController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping //Jackson
-    public boolean createCategory(@RequestBody CategoryDto newCategory) { //insert
+    public boolean createCategory(@RequestBody @Valid CategoryDto newCategory) { //insert
         return categoriesService.createCategory(newCategory);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping
-    public CategoryDto updateCategory(@RequestBody CategoryDto updCategory) { //update
+    public CategoryDto updateCategory(@RequestBody @Valid CategoryDto updCategory) { //update
         return categoriesService.updateCategory(updCategory);
     }
 
@@ -71,18 +72,26 @@ public class CategoriesController {
     @ExceptionHandler({IllegalArgumentException.class, FileNotFoundException.class})
     public ResponseEntity handleTwoException(Exception exception) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(exception.getMessage());
+                .status(HttpStatus.NO_CONTENT) //HttpStatus.BAD_REQUEST
+                .body("CategoriesController: " + exception.getMessage());
     }
 
+/*/
     // альтернативная обработка ошибочной ситуации Exception
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleException(Exception exception) {
         return ResponseEntity
                 .status(HttpStatus.I_AM_A_TEAPOT)
-                .body("Извините, что-то пошло не так. Попробуйте позже!");
+                .body("Извините, что-то пошло не так. Попробуйте позже!" + exception.getMessage());
     }
+*/
 
+
+    // For testing purpose
+    @GetMapping(value = "/test")
+    String categoriesGet(){
+        return "Привет, я контроллер - CategoriesController, " + this.toString();
+    }
 
 
 }

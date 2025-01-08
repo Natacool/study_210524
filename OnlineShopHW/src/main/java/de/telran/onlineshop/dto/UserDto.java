@@ -1,6 +1,8 @@
 package de.telran.onlineshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import de.telran.onlineshop.entity.enums.Role;
+import jakarta.validation.constraints.*;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -8,37 +10,70 @@ import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) //если равно null - скрыть в выводе
 public class UserDto {
+    @PositiveOrZero(message = "Invalid UserId: must be >= 0")
     private Long userId;
+
+    @NotNull(message = "Invalid User Name: NULL")
+    @NotEmpty(message = "Invalid User Name: empty name")
+    @Size(min = 2, max = 30, message = "Invalid User Name: must be of 2-30 characters")
     private String name;
+
     @JsonInclude(JsonInclude.Include.NON_NULL) //если равно null - скрыть в выводе
+    @Email(message = "Invalid email")
     private String email;
+
+    @NotBlank(message = "Invalid phone number: empty number")
+    @Pattern(regexp = "^\\d{12}$", message = "Invalid phone number")
     private String phoneNumber;
+
+//    @NotNull
+//    private Role role;
+
+    @NotNull(message = "Invalid User passwordHash: NULL")
+    @NotEmpty(message = "Invalid User passwordHash: EMPTY")
     private String passwordHash;
-    RolesEnum role;
 
+    @NotNull(message = "Invalid User cart: NULL")
+    private CartDto cart;
+
+    @NotNull(message = "Invalid User favorites list: NULL")
     private Set<FavoriteDto> favorites = new HashSet<>();
-    //private CartDto cart;
-    private Long cart;
 
-    public UserDto() {
-    }
+    @NotNull(message = "Invalid User orders list: NULL")
+    private Set<OrderDto> orders = new HashSet<>();
 
-    public UserDto(long userId, String name, String email,
-                   String phoneNumber, String passwordHash,
-                   RolesEnum role) {
+    public UserDto(Long userId, String name, String email, String phoneNumber, String passwordHash) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.passwordHash = passwordHash;
-        this.role = role;
     }
 
-    public long getUserId() {
+    public UserDto() {
+    }
+
+    public CartDto getCart() {
+        return cart;
+    }
+
+    public void setCart(CartDto cart) {
+        this.cart = cart;
+    }
+
+    public Set<FavoriteDto> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Set<FavoriteDto> favorites) {
+        this.favorites = favorites;
+    }
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -74,14 +109,6 @@ public class UserDto {
         this.passwordHash = passwordHash;
     }
 
-    public RolesEnum getRole() {
-        return role;
-    }
-
-    public void setRole(RolesEnum role) {
-        this.role = role;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,7 +131,6 @@ public class UserDto {
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", role=" + role +
                 '}';
     }
 }

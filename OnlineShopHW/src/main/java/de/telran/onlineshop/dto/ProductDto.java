@@ -1,10 +1,12 @@
 package de.telran.onlineshop.dto;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
-/*
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -12,141 +14,43 @@ import java.util.Objects;
 @EqualsAndHashCode
 @ToString
 @Builder
-*/
 public class ProductDto {
+    @PositiveOrZero(message = "Invalid ProductId: must be >= 0")
     private Long productId;
+
+    @NotNull(message = "Invalid Product Name: NULL")
+    @NotEmpty(message = "Invalid Product Name: empty name")
+    @Size(min = 2, max = 30, message = "Invalid Product Name: must be of 2-30 characters")
     private String name;
+
+    @NotBlank(message = "Invalid Product Description: description should NOT be blank")
     private String description;
+
+    @PositiveOrZero(message = "Invalid Product Price: must be >= 0")
     private Double price;
-    //private CategoryDto categoryId;
-    private Long categoryId;
+
+    @NotNull(message = "Invalid Product imageUrl: NULL")
     private String imageUrl;
+
+    @PositiveOrZero(message = "Invalid Product Discount Price: must be >= 0")
     private Double discountPrice;
+
+    @PastOrPresent(message = "Invalid Product CreatedAt time: must be in PAST or PRESENT")
     private Timestamp createdAt;
+
+    @FutureOrPresent(message = "Invalid Product UpdatedAt time: must be in FUTURE or PRESENT")
     private Timestamp updatedAt;
 
+    @NotNull(message = "Invalid Product category: NULL")
+    private CategoryDto category;
 
-    public ProductDto() {
-    }
+    @NotNull(message = "Invalid Product cartItems list: NULL")
+    private Set<CartItemDto> cartItems = new HashSet<>();
 
-    public ProductDto(Long productId, String name,
-                      String description, Double price,
-                      //CategoryDto categoryId, String imageUrl,
-                      Long categoryId, String imageUrl,
-                      Double discountPrice) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.categoryId = categoryId;
-        this.imageUrl = imageUrl;
-        this.discountPrice = discountPrice;
-        createdAt = Timestamp.valueOf(LocalDateTime.now());
-        updatedAt = createdAt;
-    }
+    @NotNull(message = "Invalid Product orderItems list: NULL")
+    private Set<OrderItemDto> orderItems = new HashSet<>();
 
-    public long getProductId() {
-        return productId;
-    }
+    @NotNull(message = "Invalid Product favorites list: NULL")
+    private Set<FavoriteDto> favorites = new HashSet<>();
 
-    public void setProductId(long productId) {
-        this.productId = productId;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    //public CategoryDto getCategoryId() {
-    //    return categoryId;
-    //}
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    //public void setCategoryId(CategoryDto categoryId) {
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    public Double getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(Double discountPrice) {
-        this.discountPrice = discountPrice;
-        updatedAt = Timestamp.valueOf(LocalDateTime.now());
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductDto product)) return false;
-        return getProductId() == product.getProductId()
-                && Objects.equals(getName(), product.getName())
-                && Objects.equals(getCreatedAt(), product.getCreatedAt());
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getProductId(), getName(), getCreatedAt());
-    }
-
-    @Override
-    public String toString() {
-        return "Products{" +
-                "productId=" + productId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", categoryId=" + categoryId +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", discountPrice=" + discountPrice +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

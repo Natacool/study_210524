@@ -1,7 +1,6 @@
 package de.telran.onlineshop.entity;
 
 import de.telran.onlineshop.entity.enums.Role;
-import de.telran.onlineshop.service.CartService;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,13 +38,12 @@ public class UsersEntity {
     @Column(name = "Role")
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<OrdersEntity> orders = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<FavoritesEntity> favorites = new HashSet<>();
-
     @OneToOne(mappedBy = "user")
     private CartEntity cart;
 
+    @OneToMany(mappedBy = "user")//, cascade = CascadeType.ALL)
+    private Set<FavoritesEntity> favorites = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")//, cascade = CascadeType.ALL)
+    private Set<OrdersEntity> orders = new HashSet<>();
 }

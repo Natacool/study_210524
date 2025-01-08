@@ -5,6 +5,7 @@ import de.telran.onlineshop.dto.CartItemDto;
 import de.telran.onlineshop.dto.OrderDto;
 import de.telran.onlineshop.service.CartItemsService;
 import de.telran.onlineshop.service.CartService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartItemsController {
     private final CartItemsService cartItemService;
-    @GetMapping
-    String cartItemsGet(){
-        return "Привет, я контроллер - CartItemsController, " + this.toString();
-    }
-
-
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping  //select
@@ -35,12 +30,12 @@ public class CartItemsController {
     }
 
     @PostMapping //Jackson
-    public boolean createCartItem(@RequestBody CartItemDto newCartItem) { //insert
+    public boolean createCartItem(@RequestBody @Valid CartItemDto newCartItem) { //insert
         return cartItemService.createCartItem(newCartItem);
     }
 
     @PutMapping
-    public CartItemDto updateCartItem(@RequestBody CartItemDto updCartItem) { //update
+    public CartItemDto updateCartItem(@RequestBody @Valid CartItemDto updCartItem) { //update
         return cartItemService.updateCartItem(updCartItem);
     }
 
@@ -49,4 +44,10 @@ public class CartItemsController {
         cartItemService.deleteCartItem(id);
     }
 
+
+    // For testing purpose
+    @GetMapping(value = "/test")
+    String cartItemsGet(){
+        return "Привет, я контроллер - CartItemsController, " + this.toString();
+    }
 }

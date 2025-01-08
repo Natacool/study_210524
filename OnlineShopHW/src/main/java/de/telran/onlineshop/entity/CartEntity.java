@@ -9,12 +9,6 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "Cart")
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-@AllArgsConstructor
 public class CartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +21,4 @@ public class CartEntity {
 
     @OneToMany(mappedBy = "cart")//, cascade = CascadeType.ALL)
     private Set<CartItemsEntity> cartItems = new HashSet<>();
-/*
-    public CartEntity(Long cartId, ) {
-        this.cartId = cartId;
-    }
-*/
 }

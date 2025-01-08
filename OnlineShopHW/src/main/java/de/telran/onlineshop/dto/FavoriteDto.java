@@ -1,18 +1,19 @@
 package de.telran.onlineshop.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-@Builder
+@Data
 public class FavoriteDto {
+    @PositiveOrZero(message = "Invalid FavoriteId: must be >= 0")
     private Long favoriteId;
-    //private UserDto user;
-    private Long userId;
-    //private ProductDto product;
-    private Long productId;
+
+    @NotNull(message = "Invalid Favorite user: NULL")
+    private UserDto user;
+
+    @NotNull(message = "Invalid Favorite product: NULL")
+    private ProductDto product;
 }

@@ -1,5 +1,9 @@
 package de.telran.onlineshop.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 @AllArgsConstructor
@@ -10,12 +14,18 @@ import lombok.*;
 @ToString
 @Builder
 public class OrderItemDto {
+    @PositiveOrZero(message = "Invalid OrderItemId: must be >= 0")
     private Long orderItemId;
-    //private OrderDto orderId;
-    private Long orderId;
-    //private ProductDto productId;
-    private Long productId;
-    private Integer quantity;
-    private Double priceAtPurchase;
 
+    @NotNull(message = "Invalid OrderItem order: NULL")
+    private OrderDto order;
+
+    @NotNull(message = "Invalid OrderItem product: NULL")
+    private ProductDto product;
+
+    @Positive(message = "Invalid OrderItem Quantity: must be > 0")
+    private Integer quantity;
+
+    @PositiveOrZero(message = "Invalid OrderItem Price At Purchase: must be >= 0")
+    private Double priceAtPurchase;
 }

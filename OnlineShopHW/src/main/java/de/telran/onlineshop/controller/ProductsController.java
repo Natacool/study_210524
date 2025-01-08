@@ -2,6 +2,7 @@ package de.telran.onlineshop.controller;
 
 import de.telran.onlineshop.dto.ProductDto;
 import de.telran.onlineshop.service.ProductsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,6 @@ import java.util.List;
 public class ProductsController {
     private final ProductsService productsService;
     //private List<ProductDto> productDtoList;
-    @GetMapping(value = "/test")
-    String productsGet(){
-
-        return "Привет, я контроллер - ProductsController, " + this.toString();
-    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping  //select
@@ -37,17 +33,24 @@ public class ProductsController {
     }
 
     @PostMapping //Jackson
-    public boolean createProduct(@RequestBody ProductDto newProduct) { //insert
+    public boolean createProduct(@RequestBody @Valid ProductDto newProduct) { //insert
         return productsService.createProduct(newProduct);
     }
 
     @PutMapping
-    public ProductDto updateProduct(@RequestBody ProductDto updProduct) { //update
+    public ProductDto updateProduct(@RequestBody @Valid ProductDto updProduct) { //update
         return productsService.updateProduct(updProduct);
     }
 
     @DeleteMapping(value = "/{id}")
     public void deleteProduct(@PathVariable Long id) { //delete
         productsService.deleteProduct(id);
+    }
+
+
+    // For testing purpose
+    @GetMapping(value = "/test")
+    String productsGet(){
+        return "Привет, я контроллер - ProductsController, " + this.toString();
     }
 }

@@ -20,10 +20,9 @@ import java.util.stream.Collectors;
 public class ProductsService {
     private final ProductsRepository productsRepository;
     private final CategoriesRepository categoriesRepository;
-    private List<ProductDto> productDtoList;
+
     @PostConstruct
     void init() {
-        productDtoList = new ArrayList<>();
 
         //ProductsEntity product1 = new ProductsEntity();
                 //null, "Product1", "Description of product1"
@@ -68,67 +67,133 @@ public class ProductsService {
     }
 
     public List<ProductDto> getAllProducts() {
+
         List<ProductsEntity> productsEntities = productsRepository.findAll();
         return productsEntities.stream()
-                .map(entity -> new ProductDto(
-                        entity.getProductId(),
+                .map(entity -> ProductDto.builder()
+                        .productId(entity.getProductId())
+                        .name(entity.getName())
+                        .build())
+                .collect(Collectors.toList());
+
+/*
+        List<ProductsEntity> productsEntities = productsRepository.findAll();
+        return productsEntities.stream()
+                .map(entity -> new ProductDto(entity.getProductId(),
                         entity.getName(),
                         entity.getDescription(),
                         entity.getPrice(),
-                        //categoriesRepository.findById(entity.getCategory().getCategoryId()).orElse(null),
-                        //new CategoryDto(), //????
-                        entity.getCategory().getCategoryId(),
                         entity.getImageUrl(),
-                        entity.getDiscountPrice()
+                        entity.getDiscountPrice(),
+                        entity.getCreatedAt(),
+                        entity.getUpdatedAt(),
+                        new CategoryDto(entity.getCategory().getCategoryId(),
+                                entity.getCategory().getName())
                         ))
                 .collect(Collectors.toList());
+*/
     }
 
 
     public ProductDto getProductById(Long id) { ///users/find/3
-        return productDtoList.stream()
-                .filter(product -> product.getProductId()==id)
-                .findFirst()
-                .orElse(null);
+        ProductsEntity productsEntity = productsRepository.findById(id).orElse(new ProductsEntity());
+
+        return ProductDto.builder()
+                .productId(productsEntity.getProductId())
+                .name(productsEntity.getName())
+                .build();
+
+/*
+        return new ProductDto(productsEntity.getProductId(),
+                productsEntity.getName(),
+                productsEntity.getDescription(),
+                productsEntity.getPrice(),
+                productsEntity.getImageUrl(),
+                productsEntity.getDiscountPrice(),
+                productsEntity.getCreatedAt(),
+                productsEntity.getUpdatedAt(),
+                new CategoryDto(productsEntity.getCategory().getCategoryId(),
+                        productsEntity.getCategory().getName()));
+*/
     }
 
     public ProductDto getProductByName(String name) { ///users/get?name=Other,k=2
-        return productDtoList.stream()
-                .filter(product -> product.getName().equals(name))
-                .findFirst()
-                .orElse(null);
+        ProductsEntity productsEntity = productsRepository.findByName(name);
+
+        return new ProductDto(productsEntity.getProductId(),
+                productsEntity.getName(),
+                productsEntity.getDescription(),
+                productsEntity.getPrice(),
+                productsEntity.getImageUrl(),
+                productsEntity.getDiscountPrice(),
+                productsEntity.getCreatedAt(),
+                productsEntity.getUpdatedAt(),
+                new CategoryDto(productsEntity.getCategory().getCategoryId(),
+                        productsEntity.getCategory().getName()));
     }
 
     public boolean createProduct(ProductDto newProduct) { //insert
-        return productDtoList.add(newProduct);
-    }
+        ProductsEntity createProductEntity = new ProductsEntity(null,
+                newProduct.getName(),
+                newProduct.getDescription(),
+                newProduct.getPrice(),
+                newProduct.getImageUrl(),
+                newProduct.getDiscountPrice(),
+                newProduct.getCreatedAt(),
+                newProduct.getUpdatedAt(),
+                new CategoriesEntity(newProduct.getCategory().getCategoryId(),
+                        newProduct.getCategory().getName()),
+                null,
+                null,
+                null);
+        ProductsEntity returnProductEntity = productsRepository.save(createProductEntity);
+        return returnProductEntity.getProductId() != null;
+   }
 
     public ProductDto updateProduct(ProductDto updProduct) { //update
-        ProductDto result = productDtoList.stream()
-                .filter(product -> product.getProductId() == updProduct.getProductId())
-                .findFirst()
-                .orElse(null);
-        if(result!=null) {
-            result.setName(updProduct.getName());
-        }
-        return result;
+        ProductsEntity updateProductEntity = new ProductsEntity(updProduct.getProductId(),
+                updProduct.getName(),
+                updProduct.getDescription(),
+                updProduct.getPrice(),
+                updProduct.getImageUrl(),
+                updProduct.getDiscountPrice(),
+                updProduct.getCreatedAt(),
+                updProduct.getUpdatedAt(),
+                new CategoriesEntity(updProduct.getCategory().getCategoryId(),
+                        updProduct.getCategory().getName()),
+                null,
+                null,
+                null);
+
+        ProductsEntity returnProductEntity = productsRepository.save(updateProductEntity);
+
+        // трансформируем данные из Entity в Dto и возвращаем пользователю
+        return new ProductDto(returnProductEntity.getProductId(),
+                returnProductEntity.getName(),
+                returnProductEntity.getDescription(),
+                returnProductEntity.getPrice(),
+                returnProductEntity.getImageUrl(),
+                returnProductEntity.getDiscountPrice(),
+                returnProductEntity.getCreatedAt(),
+                returnProductEntity.getUpdatedAt(),
+                new CategoryDto(returnProductEntity.getCategory().getCategoryId(),
+                        returnProductEntity.getCategory().getName()));
     }
 
     public void deleteProduct(Long id) { //delete
-        Iterator<ProductDto> it = productDtoList.iterator();
-        while (it.hasNext()) {
-            ProductDto current = it.next();
-            if(current.getProductId()==id) {
-                it.remove();
-            }
+        //productsRepository.deleteById(id); //первый вариант реализации Delete, менее информативно
+
+        //второй вариант реализации Delete
+        ProductsEntity product = productsRepository.findById(id).orElse(null);
+        if(product == null) {
+            throw new RuntimeException("Нет такого объекта с Id = " + id);
+        } else {
+            productsRepository.delete(product);
         }
     }
 
     public void destroy() {
-        productDtoList.clear();
         System.out.println("Run code after finishing work with the object: "
                 + this.getClass().getName());
     }
-
-
 }

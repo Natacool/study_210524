@@ -6,6 +6,7 @@ package de.telran.onlineshop.service;
 import de.telran.onlineshop.entity.CategoriesEntity;
 import de.telran.onlineshop.dto.CategoryDto;
 import de.telran.onlineshop.repository.CategoriesRepository;
+import de.telran.onlineshop.repository.ProductsRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,8 @@ public class CategoriesService {
 
     //@Autowired
     private final CategoriesRepository categoriesRepository;
+    private final ProductsRepository productsRepository;
+
 
     @Autowired
     private Random random1; //taskRandom1; //имя переменной совпало с именем метода Bean
@@ -41,8 +44,6 @@ public class CategoriesService {
     private Random otherRandom;
 
     //Поиск бина в контейнере: по типу данных, по имени, по значению в аннотации Qualifier
-
-    private List<CategoryDto> categoryList;
 
     @PostConstruct
     void init() {
@@ -102,8 +103,8 @@ public class CategoriesService {
     }
 
     public CategoryDto updateCategory(CategoryDto updCategory) { //update
-        CategoriesEntity createCategoryEntity = new CategoriesEntity(updCategory.getCategoryId(), updCategory.getName());
-        CategoriesEntity returnCategoryEntity = categoriesRepository.save(createCategoryEntity);
+        CategoriesEntity updateCategoryEntity = new CategoriesEntity(updCategory.getCategoryId(), updCategory.getName());
+        CategoriesEntity returnCategoryEntity = categoriesRepository.save(updateCategoryEntity);
         // трансформируем данные из Entity в Dto и возвращаем пользователю
         return new CategoryDto(returnCategoryEntity.getCategoryId(), returnCategoryEntity.getName());
     }
@@ -123,7 +124,6 @@ public class CategoriesService {
 
     @PreDestroy
     void destroy() {
-        categoryList.clear();
         System.out.println("Выполняем логику при окончании работы с  объектом "+this.getClass().getName());
     }
 }

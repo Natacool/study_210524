@@ -2,11 +2,11 @@ package de.telran.onlineshop.service;
 
 import de.telran.onlineshop.dto.CategoryDto;
 import de.telran.onlineshop.dto.FavoriteDto;
-import de.telran.onlineshop.entity.CategoriesEntity;
+import de.telran.onlineshop.dto.ProductDto;
+import de.telran.onlineshop.dto.UserDto;
 import de.telran.onlineshop.entity.FavoritesEntity;
 import de.telran.onlineshop.entity.ProductsEntity;
 import de.telran.onlineshop.entity.UsersEntity;
-import de.telran.onlineshop.repository.CategoriesRepository;
 import de.telran.onlineshop.repository.FavoritesRepository;
 import de.telran.onlineshop.repository.ProductsRepository;
 import de.telran.onlineshop.repository.UsersRepository;
@@ -24,7 +24,6 @@ public class FavoritesService {
     private final UsersRepository usersRepository;
     private final ProductsRepository productsRepository;
     private final FavoritesRepository favoritesRepository;
-    private List<FavoriteDto> favoriteDtoList;
 
     @PostConstruct
     void init() {
@@ -45,16 +44,38 @@ public class FavoritesService {
         List<FavoritesEntity> favoritesEntities = favoritesRepository.findAll();
         return favoritesEntities.stream()
                 .map(entity -> new FavoriteDto(entity.getFavoriteId(),
-                        entity.getUser().getUserId(),
-                        entity.getProduct().getProductId()))
+                        new UserDto(entity.getUser().getUserId(), entity.getUser().getName(),
+                                entity.getUser().getEmail(), entity.getUser().getPhoneNumber(),
+                                entity.getUser().getPasswordHash()),
+                        new ProductDto(entity.getProduct().getProductId(),
+                                entity.getProduct().getName(),
+                                entity.getProduct().getDescription(),
+                                entity.getProduct().getPrice(),
+                                entity.getProduct().getImageUrl(),
+                                entity.getProduct().getDiscountPrice(),
+                                entity.getProduct().getCreatedAt(),
+                                entity.getProduct().getUpdatedAt(),
+                                new CategoryDto(entity.getProduct().getCategory().getCategoryId(),
+                                        entity.getProduct().getCategory().getName()))))
                 .collect(Collectors.toList());
     }
 
     public FavoriteDto getFavoriteById(Long id) {
         FavoritesEntity favoritesEntity = favoritesRepository.findById(id).orElse(new FavoritesEntity()); // new CategoriesEntity() or null
         return new FavoriteDto(favoritesEntity.getFavoriteId(),
-                favoritesEntity.getUser().getUserId(),
-                favoritesEntity.getProduct().getProductId());
+                new UserDto(favoritesEntity.getUser().getUserId(), favoritesEntity.getUser().getName(),
+                        favoritesEntity.getUser().getEmail(), favoritesEntity.getUser().getPhoneNumber(),
+                        favoritesEntity.getUser().getPasswordHash()),
+                new ProductDto(favoritesEntity.getProduct().getProductId(),
+                        favoritesEntity.getProduct().getName(),
+                        favoritesEntity.getProduct().getDescription(),
+                        favoritesEntity.getProduct().getPrice(),
+                        favoritesEntity.getProduct().getImageUrl(),
+                        favoritesEntity.getProduct().getDiscountPrice(),
+                        favoritesEntity.getProduct().getCreatedAt(),
+                        favoritesEntity.getProduct().getUpdatedAt(),
+                        new CategoryDto(favoritesEntity.getProduct().getCategory().getCategoryId(),
+                                favoritesEntity.getProduct().getCategory().getName())));
     }
 /*
     public FavoriteDto getFavoriteByName(String name) { ///categories/get?name=Other,k=2
@@ -66,8 +87,8 @@ public class FavoritesService {
 */
     public boolean createFavorite(FavoriteDto newFavorite) { //insert
         FavoritesEntity createFavoriteEntity = new FavoritesEntity(null,
-                usersRepository.findById(newFavorite.getUserId()).orElse(null),
-                productsRepository.findById(newFavorite.getProductId()).orElse(null));
+                usersRepository.findById(newFavorite.getUser().getUserId()).orElse(null),
+                productsRepository.findById(newFavorite.getProduct().getProductId()).orElse(null));
         FavoritesEntity returnFavoriteEntity = favoritesRepository.save(createFavoriteEntity);
 
         return returnFavoriteEntity.getFavoriteId() != null;
@@ -76,14 +97,25 @@ public class FavoritesService {
     public FavoriteDto updateFavorite(FavoriteDto updFavorite) { //update
         FavoritesEntity createFavoriteEntity = new FavoritesEntity(
                 updFavorite.getFavoriteId(),
-                usersRepository.findById(updFavorite.getUserId()).orElse(null),
-                productsRepository.findById(updFavorite.getProductId()).orElse(null));
+                usersRepository.findById(updFavorite.getUser().getUserId()).orElse(null),
+                productsRepository.findById(updFavorite.getProduct().getProductId()).orElse(null));
 
         FavoritesEntity returnFavoriteEntity = favoritesRepository.save(createFavoriteEntity);
         // трансформируем данные из Entity в Dto и возвращаем пользователю
         return new FavoriteDto(returnFavoriteEntity.getFavoriteId(),
-                returnFavoriteEntity.getUser().getUserId(),
-                returnFavoriteEntity.getProduct().getProductId());
+                new UserDto(returnFavoriteEntity.getUser().getUserId(), returnFavoriteEntity.getUser().getName(),
+                        returnFavoriteEntity.getUser().getEmail(), returnFavoriteEntity.getUser().getPhoneNumber(),
+                        returnFavoriteEntity.getUser().getPasswordHash()),
+                new ProductDto(returnFavoriteEntity.getProduct().getProductId(),
+                        returnFavoriteEntity.getProduct().getName(),
+                        returnFavoriteEntity.getProduct().getDescription(),
+                        returnFavoriteEntity.getProduct().getPrice(),
+                        returnFavoriteEntity.getProduct().getImageUrl(),
+                        returnFavoriteEntity.getProduct().getDiscountPrice(),
+                        returnFavoriteEntity.getProduct().getCreatedAt(),
+                        returnFavoriteEntity.getProduct().getUpdatedAt(),
+                        new CategoryDto(returnFavoriteEntity.getProduct().getCategory().getCategoryId(),
+                                returnFavoriteEntity.getProduct().getCategory().getName())));
     }
 
     public void deleteFavorite(Long id) { //delete
@@ -101,7 +133,6 @@ public class FavoritesService {
 
     @PreDestroy
     void destroy() {
-        favoriteDtoList.clear();
         System.out.println("Выполняем логику при окончании работы с  объектом "+this.getClass().getName());
     }
 

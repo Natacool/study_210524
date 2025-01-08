@@ -2,6 +2,7 @@ package de.telran.onlineshop.controller;
 
 import de.telran.onlineshop.dto.OrderDto;
 import de.telran.onlineshop.service.OrdersService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrdersController {
     private final OrdersService orderService;
-    @GetMapping
-    String ordersGet(){
-        return "Привет, я контроллер - OrdersController, " + this.toString();
-    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping  //select
@@ -30,18 +27,25 @@ public class OrdersController {
     }
 
     @PostMapping //Jackson
-    public boolean createOrder(@RequestBody OrderDto newOrder) { //insert
+    public boolean createOrder(@RequestBody @Valid OrderDto newOrder) { //insert
         return orderService.createOrder(newOrder);
     }
 
     @PutMapping
-    public OrderDto updateOrder(@RequestBody OrderDto updOrder) { //update
+    public OrderDto updateOrder(@RequestBody @Valid OrderDto updOrder) { //update
         return orderService.updateOrder(updOrder);
     }
 
     @DeleteMapping(value = "/{id}")
     public void deleteOrder(@PathVariable Long id) { //delete
         orderService.deleteOrder(id);
+    }
+
+
+    // For testing purpose
+    @GetMapping(value = "/test")
+    String ordersGet(){
+        return "Привет, я контроллер - OrdersController, " + this.toString();
     }
 
 }

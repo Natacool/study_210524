@@ -4,6 +4,7 @@ import de.telran.onlineshop.dto.OrderDto;
 import de.telran.onlineshop.dto.OrderItemDto;
 import de.telran.onlineshop.service.CartItemsService;
 import de.telran.onlineshop.service.OrderItemsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderItemsController {
     private final OrderItemsService orderItemsService;
-    @GetMapping
-    String orderItemsGet(){
-        return "Привет, я контроллер - OrderItemsController, " + this.toString();
-    }
-
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping  //select
@@ -33,12 +29,12 @@ public class OrderItemsController {
     }
 
     @PostMapping //Jackson
-    public boolean createOrderItem(@RequestBody OrderItemDto newOrderItem) { //insert
+    public boolean createOrderItem(@RequestBody @Valid OrderItemDto newOrderItem) { //insert
         return orderItemsService.createOrderItem(newOrderItem);
     }
 
     @PutMapping
-    public OrderItemDto updateOrderItem(@RequestBody OrderItemDto updOrderItem) { //update
+    public OrderItemDto updateOrderItem(@RequestBody @Valid OrderItemDto updOrderItem) { //update
         return orderItemsService.updateOrderItem(updOrderItem);
     }
 
@@ -48,6 +44,9 @@ public class OrderItemsController {
     }
 
 
-
-
+    // For testing purpose
+    @GetMapping(value = "/test")
+    String orderItemsGet(){
+        return "Привет, я контроллер - OrderItemsController, " + this.toString();
+    }
 }
