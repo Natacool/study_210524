@@ -69,6 +69,14 @@ public class UserDto {
         this.favorites = favorites;
     }
 
+    public Set<OrderDto> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderDto> orders) {
+        this.orders = orders;
+    }
+
     public Long getUserId() {
         return userId;
     }

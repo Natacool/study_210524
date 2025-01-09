@@ -21,6 +21,6 @@ public class CartDto {
     @NotNull(message = "Invalid Cart cartItems list: NULL")
     private Set<CartItemDto> cartItems = new HashSet<>();
 
-    //@NotNull(message = "Invalid Order user: NULL")
-    //private UserDto user;
+    @NotNull(message = "Invalid Order user: NULL")
+    private UserDto user;
 }

@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CategoriesControllerTest {
 
     @Autowired
-    private MockMvc mockMvc; // для иммитации запросов пользователей
+    private MockMvc mockMvc; // для имитации запросов пользователей
 
     @MockBean
     private CategoriesService categoriesServiceMock;

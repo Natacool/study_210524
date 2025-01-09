@@ -27,6 +27,14 @@ public class CategoryDto {
         this.name = name;
     }
 
+    public Set<ProductDto> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<ProductDto> products) {
+        this.products = products;
+    }
+
     public long getCategoryId() {
         return categoryId;
     }
