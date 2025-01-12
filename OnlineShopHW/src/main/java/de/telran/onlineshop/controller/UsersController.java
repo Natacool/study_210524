@@ -1,5 +1,6 @@
 package de.telran.onlineshop.controller;
 
+import de.telran.onlineshop.annotation.LogAnnotation;
 import de.telran.onlineshop.dto.UserDto;
 import de.telran.onlineshop.service.UsersService;
 import jakarta.annotation.PostConstruct;
@@ -25,12 +26,14 @@ public class UsersController {
     }
 
     @GetMapping  //select
+    @LogAnnotation
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = usersService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.valueOf(200));
     }
 
     @GetMapping(value = "/{id}")
+    @LogAnnotation
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         if (id < 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -41,30 +44,35 @@ public class UsersController {
 
     // Экранирование кириллицы для url - https://planetcalc.ru/683/
     @GetMapping(value = "/get")
+    @LogAnnotation
     public ResponseEntity<UserDto> getUserByName(@RequestParam String name) { ///users/get?name=Other,k=2
         UserDto user = usersService.getUserByName(name);
         return ResponseEntity.status(200).body(user);
     }
 
     @PostMapping(value = "/create") //Jackson
+    @LogAnnotation
     public ResponseEntity<Boolean> createUser(@RequestBody UserDto newUser) { //insert
         boolean res = usersService.createUser(newUser);
         return ResponseEntity.status(201).body(res);
     }
 
     @PostMapping //Jackson
+    @LogAnnotation
     public ResponseEntity<UserDto> insertUser(@RequestBody @Valid UserDto newUser) { //insert
         UserDto user = usersService.insertUser(newUser);
         return ResponseEntity.status(201).body(user);
     }
 
     @PutMapping
+    @LogAnnotation
     public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto updUser) { //update
         UserDto user = usersService.updateUser(updUser);
         return ResponseEntity.status(202).body(user);
     }
 
     @DeleteMapping(value = "/{id}")
+    @LogAnnotation
     public ResponseEntity<UserDto> deleteUser(@PathVariable Long id) { //delete
         UserDto delUser = usersService.getUserById(id);
         return ResponseEntity.status(204).body(delUser);

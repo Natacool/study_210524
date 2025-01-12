@@ -3,6 +3,7 @@ package de.telran.onlineshop.controller;
 import de.telran.onlineshop.dto.CategoryDto;
 import de.telran.onlineshop.service.CategoriesService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
+@Slf4j
 //@RequiredArgsConstructor
 public class CategoriesController {
     // final - for @RequiredArgsConstructor
@@ -32,6 +34,9 @@ public class CategoriesController {
 
     @GetMapping  //select
     public List<CategoryDto> getAllCategories() {
+        long start = System.currentTimeMillis();
+        List<CategoryDto> result = categoriesService.getAllCategories();
+        log.info("getAllCategories:" + (System.currentTimeMillis() - start));
         return categoriesService.getAllCategories();
     }
 

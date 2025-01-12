@@ -45,6 +45,14 @@ class CategoriesRepositoryTest {
     // test
     //assert
 
+    private CategoriesEntity generateTestData() {
+        CategoriesEntity categoriesInsert = categoriesRepositoryTest.save(categoriesEntityNewTest);
+        assertNotNull(categoriesInsert);
+        assertTrue(categoriesInsert.getCategoryId()!=null);
+        assertEquals(NAME_TEST, categoriesInsert.getName());
+        return categoriesInsert;
+    }
+
     @Test
     void findAllTest() {
         List<CategoriesEntity> categoriesTest = categoriesRepositoryTest.findAll();
@@ -82,6 +90,22 @@ class CategoriesRepositoryTest {
     }
 
     @Test
+    void findByIdTest() {
+        //when
+        CategoriesEntity categoriesExpected = generateTestData();
+
+        // run
+        Long idExpected = categoriesExpected.getCategoryId();
+        CategoriesEntity categoriesActual = categoriesRepositoryTest.findById(idExpected).orElse(null);
+
+        //assert
+        assertNotNull(categoriesActual);
+        assertEquals(idExpected, categoriesActual.getCategoryId());
+
+        // подчищаем ?
+    }
+
+    @Test
     void findByNameTest() {
         //when
         CategoriesEntity categoriesExpected = generateTestData();
@@ -89,6 +113,22 @@ class CategoriesRepositoryTest {
         // run
         String nameExpected = categoriesExpected.getName();
         CategoriesEntity categoriesActual = categoriesRepositoryTest.findByName(nameExpected);
+
+        //assert
+        assertNotNull(categoriesActual);
+        assertEquals(nameExpected, categoriesActual.getName());
+
+        // подчищаем ?
+    }
+
+    @Test
+    void findByNameNativeTest() {
+        //when
+        CategoriesEntity categoriesExpected = generateTestData();
+
+        // run
+        String nameExpected = categoriesExpected.getName();
+        CategoriesEntity categoriesActual = categoriesRepositoryTest.findByNameNative(nameExpected);
 
         //assert
         assertNotNull(categoriesActual);
@@ -121,37 +161,4 @@ class CategoriesRepositoryTest {
         assertNull(categoriesActual);
     }
 
-    @Test
-    void findByNameNativeTest() {
-        //when
-        CategoriesEntity categoriesExpected = generateTestData();
-
-        // run
-        String nameExpected = categoriesExpected.getName();
-        CategoriesEntity categoriesActual = categoriesRepositoryTest.findByNameNative(nameExpected);
-
-        //assert
-        assertNotNull(categoriesActual);
-        assertEquals(nameExpected, categoriesActual.getName());
-
-        // подчищаем ?
-    }
-
-    private CategoriesEntity generateTestData() {
-        CategoriesEntity categoriesInsert = categoriesRepositoryTest.save(categoriesEntityNewTest);
-        assertNotNull(categoriesInsert);
-        assertTrue(categoriesInsert.getCategoryId()!=null);
-        assertEquals(NAME_TEST, categoriesInsert.getName());
-        return categoriesInsert;
-    }
-
-/*
-    @Test
-    void findByName() {
-    }
-
-    @Test
-    void findByNameNative() {
-    }
-*/
 }
