@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/products")
 @RequiredArgsConstructor
-public class ProductsController {
+public class ProductsController implements ProductsControllerInterface {
     private final ProductsService productsService;
     //private List<ProductDto> productDtoList;
 

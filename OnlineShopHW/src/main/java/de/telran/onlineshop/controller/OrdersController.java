@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/orders")
 @RequiredArgsConstructor
-public class OrdersController {
+public class OrdersController implements OrdersControllerInterface  {
     private final OrdersService orderService;
 
     @ResponseStatus(HttpStatus.OK)

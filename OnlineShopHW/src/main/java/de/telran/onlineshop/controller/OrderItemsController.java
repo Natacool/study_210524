@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/order_items")
 @RequiredArgsConstructor
-public class OrderItemsController {
+public class OrderItemsController implements OrderItemsControllerInterface {
     private final OrderItemsService orderItemsService;
 
     @ResponseStatus(HttpStatus.OK)

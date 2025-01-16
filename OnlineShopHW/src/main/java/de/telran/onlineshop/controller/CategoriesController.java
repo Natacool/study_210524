@@ -2,6 +2,11 @@ package de.telran.onlineshop.controller;
 
 import de.telran.onlineshop.dto.CategoryDto;
 import de.telran.onlineshop.service.CategoriesService;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,7 +20,7 @@ import java.util.List;
 @RequestMapping(value = "/categories")
 @Slf4j
 //@RequiredArgsConstructor
-public class CategoriesController {
+public class CategoriesController implements CategoriesControllerInterface {
     // final - for @RequiredArgsConstructor
     //@Autowired - инъекция через value (не рекомендуемая из-за Reflection)
     private CategoriesService categoriesService;
@@ -33,6 +38,10 @@ public class CategoriesController {
     }
 
     @GetMapping  //select
+    @Operation(
+            summary = "Все категории",
+            description = "Позволяет получить все категории товаров"
+    )
     public List<CategoryDto> getAllCategories() {
         long start = System.currentTimeMillis();
         List<CategoryDto> result = categoriesService.getAllCategories();
@@ -40,8 +49,17 @@ public class CategoriesController {
         return categoriesService.getAllCategories();
     }
 
+    @Operation(
+            summary = "Поиск по Id",
+            description = "Позволяет найти информация по идентификатору Id категории товара"
+    )
     @GetMapping(value = "/find/{id}")
-    public CategoryDto getCategoryById(@PathVariable Long id) { ///categories/find/3  // throws FileNotFoundException
+    public CategoryDto getCategoryById(
+            @PathVariable
+            @Parameter(description = "Идентификатор категории",
+                    required = true,
+                    example = "1")
+            Long id) { ///categories/find/3  // throws FileNotFoundException
 // for testing - artificial situation
 //        if (id < 0) {
 //            new IllegalArgumentException("id should NOT be negative");
@@ -68,6 +86,7 @@ public class CategoriesController {
         return categoriesService.updateCategory(updCategory);
     }
 
+    @Hidden
     @DeleteMapping(value = "/{id}")
     public void deleteCategory(@PathVariable Long id) { //delete
         categoriesService.deleteCategory(id);

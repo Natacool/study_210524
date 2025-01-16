@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/cart_items")
 @RequiredArgsConstructor
-public class CartItemsController {
+public class CartItemsController implements CartItemsControllerInterface {
     private final CartItemsService cartItemService;
 
     @ResponseStatus(HttpStatus.OK)

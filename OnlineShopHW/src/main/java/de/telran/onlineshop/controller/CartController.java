@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/cart")
 @RequiredArgsConstructor
-public class CartController {
+public class CartController implements CartControllerInterface {
     private final CartService cartService;
 /*
     //@Autowired// - инъекция через конструктор (рекомендуемая !!!), авто аннотирование с версии 3.0
