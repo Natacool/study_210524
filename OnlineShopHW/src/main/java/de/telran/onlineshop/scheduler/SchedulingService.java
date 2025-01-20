@@ -48,7 +48,7 @@ public class SchedulingService {
                         + ", about unpaid order: "
                         + order.getOrderId()
                 );
-                
+
                 System.out.println("Send email notification to: "
                         + user.getEmail()
                         + ", you have unpaid Order: "
@@ -57,8 +57,6 @@ public class SchedulingService {
 
             }
         }
-
-        log.info("Пример работы scheduledTask (Cron) -> "+ LocalDateTime.now());
     }
 
     boolean greaterThanOneDay(Timestamp orderCreatedTime){
